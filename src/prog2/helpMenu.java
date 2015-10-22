@@ -17,5 +17,9 @@ public class helpMenu extends JFrame {
         super( "HELP MENU");
         
     }
+    public void helpaMenu()
+    {
+        System.out.println("helpa");
+    }
     
 }

@@ -7,6 +7,8 @@ package prog2;
 
 
 import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.JToolBar;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
@@ -41,11 +43,26 @@ public class window extends JFrame implements KeyListener
         } );
         menu.add( mItem );
         
+        
+        //tool menu
+        menu = new JMenu ("Tools");
+        menuBar.add( menu );
+        
+        //colors tools
+        mItem = new JCheckBoxMenuItem ( "Colors" );
+        menu.add( mItem );
+        
+        //shape tools
+        mItem = new JCheckBoxMenuItem( "Shapes" );
+        menu.add( mItem );
+        
+        
+        
         //Help menu
         menu = new JMenu ("Help");
         menuBar.add( menu );
         
-        mItem = new JMenuItem ( "about" );
+        mItem = new JMenuItem ( "Help" );
         mItem.addActionListener( new ActionListener()
         {
             public void actionPerformed( ActionEvent ae)
@@ -54,6 +71,19 @@ public class window extends JFrame implements KeyListener
                 help.setVisible(true);
                 help.setSize(300,300);
                 help.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            }
+        });
+        menu.add( mItem );
+        
+        mItem = new JMenuItem ( "about");
+        mItem.addActionListener( new ActionListener()
+        {
+            public void actionPerformed( ActionEvent ae)
+            {
+                JFrame aboutMenu = new helpMenu();
+                aboutMenu.setVisible(true);
+                aboutMenu.setSize(300,300);
+                aboutMenu.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             }
         });
         menu.add( mItem );
@@ -71,7 +101,15 @@ public class window extends JFrame implements KeyListener
 
         // exit if Escape key is pressed
         if ( event.getKeyCode() == 27 || event.getKeyCode() == 81){
-            System.exit( 0 );
+            
+            //check for exit
+            int exit = JOptionPane.showConfirmDialog( null, "Are you sure "
+                    + "you would like to quit?", "system" ,
+                    JOptionPane.YES_NO_OPTION);
+            if( exit == 0)
+            {
+               System.exit( 0 );
+            }
         }
     }
 
