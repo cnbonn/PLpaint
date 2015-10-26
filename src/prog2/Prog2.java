@@ -11,6 +11,11 @@ package prog2;
  */
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowFocusListener;
+import java.awt.event.WindowStateListener;
         
 public class Prog2 {
 
@@ -21,7 +26,23 @@ public class Prog2 {
         JFrame frame = new window();
         frame.setSize(400,400);
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        //exit confirmation
+        WindowListener exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int confirm = JOptionPane.showOptionDialog(
+                    null, "Are You Sure to would like to quit?", 
+                    "Exit Confirmation", JOptionPane.YES_NO_OPTION, 
+                    JOptionPane.QUESTION_MESSAGE, null, null, null);
+                if (confirm == 0) {
+                    System.exit(0);
+                }
+            }   
+        };
+        frame.addWindowListener(exitListener);
         
     }
     

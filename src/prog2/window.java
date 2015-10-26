@@ -38,7 +38,14 @@ public class window extends JFrame implements KeyListener
         {
             public void actionPerformed( ActionEvent ae )
             {
+                //popup window with exit confermation
+                int exit = JOptionPane.showConfirmDialog( null, "Are you sure "
+                    + "you would like to quit?", "Exit Confermation" ,
+                    JOptionPane.YES_NO_OPTION);
+                if( exit == 0)
+                {
                 System.exit( 0 );
+                }
             }
         } );
         menu.add( mItem );
@@ -104,7 +111,7 @@ public class window extends JFrame implements KeyListener
             
             //check for exit
             int exit = JOptionPane.showConfirmDialog( null, "Are you sure "
-                    + "you would like to quit?", "system" ,
+                    + "you would like to quit?", "Exit Confirmation" ,
                     JOptionPane.YES_NO_OPTION);
             if( exit == 0)
             {
