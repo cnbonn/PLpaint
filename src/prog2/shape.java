@@ -10,5 +10,5 @@ package prog2;
  * @author nick
  */
 public class shape {
-    
+    // hello
 }
