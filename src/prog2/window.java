@@ -6,9 +6,11 @@
 package prog2;
 
 
+import java.awt.Container;
 import javax.swing.*;
 import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
@@ -20,11 +22,21 @@ import java.awt.event.KeyEvent;
  */
 public class window extends JFrame implements KeyListener
 {
+    
+    //private data
+    private Container contents;
+    private JButton lineButton, rectangleButton, elipseButton, fRectangleButton,
+            fElipseButton;
+    private ButtonGroup shapeGroup;
+    private JToolBar shapeBar;
+    
     window()
     {
         super("paint");
         
-                
+        contents = getContentPane();
+        contents.setLayout( new BoxLayout( contents, BoxLayout.Y_AXIS));
+        
         //create menu
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar( menuBar );
@@ -56,12 +68,12 @@ public class window extends JFrame implements KeyListener
         menuBar.add( menu );
         
         //colors tools
-        mItem = new JCheckBoxMenuItem ( "Colors" );
-        menu.add( mItem );
+        JCheckBoxMenuItem cItem = new JCheckBoxMenuItem ( "Colors" );
+        menu.add( cItem );
         
         //shape tools
-        mItem = new JCheckBoxMenuItem( "Shapes" );
-        menu.add( mItem );
+        cItem = new JCheckBoxMenuItem( "Shapes" );
+        menu.add( cItem );
         
         
         
@@ -75,9 +87,11 @@ public class window extends JFrame implements KeyListener
             public void actionPerformed( ActionEvent ae)
             {
                 JFrame help = new helpMenu();
-                help.setVisible(true);
+                help.pack();
+                help.setLocationRelativeTo( null );
                 help.setSize(300,300);
                 help.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                help.setVisible(true);
             }
         });
         menu.add( mItem );
@@ -88,24 +102,65 @@ public class window extends JFrame implements KeyListener
             public void actionPerformed( ActionEvent ae)
             {
                 JFrame aboutMenu = new helpMenu();
-                aboutMenu.setVisible(true);
+                aboutMenu.pack();
+                aboutMenu.setLocationRelativeTo( null );
                 aboutMenu.setSize(300,300);
                 aboutMenu.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                aboutMenu.setVisible(true);
             }
         });
         menu.add( mItem );
         
-        
+
+        makeShapeButtons();
         //add key listener
+        pack();
         addKeyListener( this );
     }
     
+    
+    
+
+    private void makeShapeButtons()
+    {
+        lineButton = new JButton("Line");
+        rectangleButton = new JButton("Rect");
+        fRectangleButton = new JButton("FRect");
+        elipseButton = new JButton("Elipse");
+        fElipseButton = new JButton("FElipse");
+        
+        
+        shapeGroup = new ButtonGroup();
+        shapeGroup.add(lineButton);
+        shapeGroup.add(rectangleButton);
+        shapeGroup.add(fRectangleButton);
+        shapeGroup.add(elipseButton);
+        shapeGroup.add(fElipseButton);
+        
+        shapeBar = new JToolBar("Shapes");
+        shapeBar.add(lineButton);
+        shapeBar.add(rectangleButton);
+        shapeBar.add(fRectangleButton);
+        shapeBar.add(elipseButton);
+        shapeBar.add(fElipseButton);
+        
+        contents.add(shapeBar);
+        
+    }
+    
+    private void makeColorButtons()
+    {
+        
+    }
+    
+    
+    // required by KeyListener interface
     // key press handler
     @Override
     public void keyPressed( KeyEvent event )
     {
         // print key presses
-
+        
         // exit if Escape key is pressed
         if ( event.getKeyCode() == 27 || event.getKeyCode() == 81){
             
@@ -119,8 +174,6 @@ public class window extends JFrame implements KeyListener
             }
         }
     }
-
-    // required by KeyListener interface
     @Override
     public void keyReleased( KeyEvent event ) { }
     @Override

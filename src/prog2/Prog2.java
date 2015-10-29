@@ -11,11 +11,9 @@ package prog2;
  */
 
 import javax.swing.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.awt.event.WindowFocusListener;
-import java.awt.event.WindowStateListener;
+import java.awt.*;
+import java.awt.event.*;
+
         
 public class Prog2 {
 
@@ -24,8 +22,11 @@ public class Prog2 {
      */
     public static void main(String[] args) {
         JFrame frame = new window();
+        
+        
         frame.setSize(400,400);
-        frame.setVisible(true);
+        frame.setLocationRelativeTo( null ); //open in center of screen
+        
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         //exit confirmation
@@ -44,6 +45,8 @@ public class Prog2 {
         };
         frame.addWindowListener(exitListener);
         
+        frame.pack();
+        frame.setVisible(true); //set visible
     }
     
 }
