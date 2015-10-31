@@ -23,11 +23,8 @@ public class Prog2 {
     public static void main(String[] args) {
         JFrame frame = new window();
         
-        
         frame.setSize(400,400);
         frame.setLocationRelativeTo( null ); //open in center of screen
-        
-        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         //exit confirmation
         WindowListener exitListener = new WindowAdapter() {
@@ -44,7 +41,7 @@ public class Prog2 {
             }   
         };
         frame.addWindowListener(exitListener);
-        
+     
         frame.pack();
         frame.setVisible(true); //set visible
     }

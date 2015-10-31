@@ -10,5 +10,17 @@ package prog2;
  * @author nick
  */
 public class shape {
-    // hello
+    
+    protected int xcord;
+    protected int ycord;
+    protected int outlineColor;
+    protected int fillColor;
+    //constructor
+    
+    public shape( int x , int y)
+    {
+        xcord = x;
+        ycord = y;
+    }
+    
 }
