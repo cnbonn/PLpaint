@@ -9,22 +9,21 @@ package prog2;
 import java.awt.Container;
 import javax.swing.*;
 import javax.swing.JOptionPane;
-import javax.swing.JToolBar;
-import javax.swing.border.*;
-import java.awt.*;
+
+
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.Graphics;
-import java.awt.BorderLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
-import javax.swing.event.MouseInputListener;
+import java.awt.BorderLayout;
+import javax.swing.JToggleButton;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 
 
 /**
@@ -36,17 +35,20 @@ public class window extends JFrame implements KeyListener, ActionListener
     //private data
     public Container contents;
     public Color outlineColor, fillColor;
-    private JButton color1, color2, color3, color4, color5, color6, color7,
-            color8, makeLine, makeRectangle, makeRectangleF, makeElipse,
+    private JButton  color1, color2, color3, color4, color5, color6,
+            color7, color8, makeLine, makeRectangle, makeRectangleF, makeElipse,
             makeElipseF;
+    private JToggleButton toggle;
+    DrawingPane canvis;
+    boolean toggled = true;
 
     window()
     {
         super("paint");
-          
+        setFocusable(true);
         //create drawing screen
         Container pane = getContentPane();
-        DrawingPane canvis = new DrawingPane();
+        canvis = new DrawingPane();
 
         
         //create shape buttions
@@ -63,6 +65,7 @@ public class window extends JFrame implements KeyListener, ActionListener
         shapePanel.add( makeRectangleF );
         shapePanel.add( makeElipse );
         shapePanel.add( makeElipseF );
+        
         //acction listeners for shapes
         makeLine.addActionListener(this);
         makeRectangle.addActionListener(this);
@@ -73,38 +76,36 @@ public class window extends JFrame implements KeyListener, ActionListener
         //create color buttons 
         //color format color( float r, float g, float b )
         JPanel colorPanel = new JPanel();
+        //toggle button
+        toggle = new JToggleButton ();
+        
+        
         color1 = new JButton("color 1");
         color1.setBackground(new Color(255,0,0));
         
-        
         color2 = new JButton("color 2");
         color2.setBackground(new Color(0,255,0));
-        
-        
+         
         color3 = new JButton("color 3");
         color3.setBackground(new Color(0,0,255));
-        
-        
+         
         color4 = new JButton("color 4");
         color4.setBackground(new Color(255,255,0));
         
-        
         color5 = new JButton("color 5");
         color5.setBackground(new Color(255,0,255));
-        
-        
+         
         color6 = new JButton("color 6");
         color6.setBackground(new Color(0,255,255));
         
-        
         color7 = new JButton("color 7");
         color7.setBackground(new Color(0,0,0));
-        ;
         
         color8 = new JButton("color 8");
         color8.setBackground(new Color(255,255,255));
       
         //add shapes
+        colorPanel.add(toggle);
         colorPanel.add(color1);
         colorPanel.add(color2);
         colorPanel.add(color3);
@@ -221,21 +222,65 @@ public class window extends JFrame implements KeyListener, ActionListener
     {
         Object source = evt.getSource();
         //color objects
-        if ( source == color1 ) System.out.println("Color: Red");
-        else if ( source == color2 ) System.out.println("Color: Green");
-        else if ( source == color3 ) System.out.println("Color: Blue");
-        else if ( source == color4 ) System.out.println("Color: Yellow");
-        else if ( source == color5 ) System.out.println("Color: Magenta");
-        else if ( source == color6 ) System.out.println("Color: Cyan");
-        else if ( source == color7 ) System.out.println("Color: Black") ;
-        else if ( source == color8 ) System.out.println("Color: White");
+        if ( source == color1 ){
+            canvis.cColor1();
+            System.out.println("Color: Red");
+        }
+        else if ( source == color2 ){
+            canvis.cColor2();
+            System.out.println("Color: Green");
+        }
+        else if ( source == color3 ){
+            canvis.cColor3();
+            System.out.println("Color: Blue");
+        }
+        else if ( source == color4 ){
+            canvis.cColor4();
+            System.out.println("Color: Yellow");
+        } 
+        else if ( source == color5 ){
+            canvis.cColor5();
+            System.out.println("Color: magenta");
+        }
+        else if ( source == color6 ){
+            canvis.cColor6();
+            System.out.println("Color: Cyan");
+        }
+        else if ( source == color7 ){
+            canvis.cColor7();
+            System.out.println("Color: Black");
+        }
+        else if ( source == color8 ){
+            canvis.cColor8();
+            System.out.println("Color: White");
+        }
         
         //shape objects
-        if ( source == makeLine ) System.out.println("Shape: Line");
-        else if ( source == makeRectangle ) System.out.println("Shape: Rectangle");
-        else if ( source == makeRectangleF ) System.out.println("Shape: Filled Rectangle");
-        else if ( source == makeElipse ) System.out.println("Shape: Elipse");
-        else if ( source == makeElipseF ) System.out.println("Shape: Filled Elipse");
+        if ( source == makeLine )
+        { 
+            canvis.sLine();
+            System.out.println("Shape: Line");
+        }
+        else if ( source == makeRectangle )
+        {
+            canvis.sRectangle();
+            System.out.println("Shape: Rectangle");
+        }
+        else if ( source == makeRectangleF )
+        {
+            canvis.sRectangleF();
+            System.out.println("Shape: Filled Rectangle");
+        }
+        else if ( source == makeElipse )
+        {
+            canvis.sEllipse();
+            System.out.println("Shape: Elipse");
+        }
+        else if ( source == makeElipseF )
+        {
+            canvis.sEllipseF();
+            System.out.println("Shape: Filled Elipse");
+        }
         
         
         
@@ -244,7 +289,8 @@ public class window extends JFrame implements KeyListener, ActionListener
     public void keyPressed( KeyEvent event )
     {
         // print key presses
-        System.out.println( "You pressed key: " + ( char )event.getKeyCode() + " (key code " + event.getKeyCode() + ")" );
+        System.out.println( "You pressed key: " + ( char )event.getKeyCode()
+                + " (key code " + event.getKeyCode() + ")" );
         
         // exit if Escape key is pressed
         if ( event.getKeyCode() == 27 || event.getKeyCode() == 81){
@@ -264,139 +310,3 @@ public class window extends JFrame implements KeyListener, ActionListener
     @Override
     public void keyTyped( KeyEvent event ) { }
 }
-
-/*class DrawingPane extends JPanel implements  ActionListener, MouseWheelListener,
-        MouseInputListener, KeyListener, MouseListener
-{
-    //private data
-    private int currX = 0, currY = 0, newX = 0, newY = 0,
-            currX2 = 0 , currY2 = 0;
-    private boolean leftButtonPress = false;
-     
-    public DrawingPane()
-    {
-        addMouseListener( this );
-        this.setBackground(Color.white);
-        repaint();
-    }
-    
-    
-    // start with 800x600 canvas
-    @Override
-    public Dimension getPreferredSize()
-    {
-        return new Dimension( 800, 600 );
-    }
-    
-    @Override
-    protected void paintComponent( Graphics g )
-    {
-        super.paintComponent( g );	// clear drawing canvas
-        g.setColor( Color.BLUE );
-        g.drawLine( currX, currY, currX2, currY2 );
-    }
-    
-    @Override
-    public void mouseWheelMoved(MouseWheelEvent mwe) {
-
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent me)
-    {
-        
-        this.newX = me.getX();
-        this.newY = me.getY();
-        
-        System.out.println("click");
- 
-    }
-
-    @Override
-    public void mousePressed(MouseEvent me) {
-        if ( SwingUtilities.isLeftMouseButton( me ) )
-        {
-            this.currX = me.getX();
-            this.currY = me.getY();
-            System.out.println( "Mouse left button click: (" + currX + "," + currY + ")" );
-            leftButtonPress = true;
-        }
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent me) {
-        if(leftButtonPress)
-        {
-            this.currX2 = me.getX();
-            this.currY2 = me.getY();
-            System.out.println( "Mouse left button release: (" + currX2 + "," + currY2 + ")" );
-            leftButtonPress = false;
-            repaint();
-        }
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent me) {
-        
-    }
-
-    @Override
-    public void mouseExited(MouseEvent me) {
-        
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent me) {
-        
-        //System.out.println("drag");
-        
-        this.newX = me.getX();
-        this.newY = me.getY();
-        
-        this.repaint();
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent me) {
-        this.newX = me.getX();
-        this.newY = me.getY();
-        
-        //System.out.println("position " + newX + " " + newY);
-        
-        this.repaint();
-        
-    }
-    
-    @Override
-    public void keyPressed( KeyEvent event )
-    {
-        // print key presses
-        System.out.println( "You pressed key: " + ( char )event.getKeyCode() + " (key code " + event.getKeyCode() + ")" );
-        
-        // exit if Escape key is pressed
-        if ( event.getKeyCode() == 27 || event.getKeyCode() == 81){
-            
-            //check for exit
-            int exit = JOptionPane.showConfirmDialog( null, "Are you sure "
-                    + "you would like to quit?", "Exit Confirmation" ,
-                    JOptionPane.YES_NO_OPTION);
-            if( exit == 0)
-            {
-               System.exit( 0 );
-            }
-        }
-    }
-    @Override
-    public void keyReleased( KeyEvent event ) { }
-    @Override
-    public void keyTyped( KeyEvent event ) { }
-    @Override
-    public void actionPerformed(ActionEvent ae)
-    {
-        
-    }
-}*/
-
-
-
-    

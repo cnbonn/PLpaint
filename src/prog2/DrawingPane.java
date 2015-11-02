@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputListener;
+import javax.swing.JList;
+import java.util.ArrayList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -33,9 +35,16 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
     private int currX = 0, currY = 0, newX = 0, newY = 0,
             currX2 = 0 , currY2 = 0;
     private boolean leftButtonPress = false;
-     
+    private Color outlineColor , fillColor;
+    private boolean fill;
+    private int shapeType = 1;
+    
+    public ArrayList<Shape> shapeList = new ArrayList<Shape>();
+    
+    
     public DrawingPane()
     {
+        shapeList = new ArrayList();
         addMouseListener( this );
         this.setBackground(Color.white);
         repaint();
@@ -53,8 +62,34 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
     protected void paintComponent( Graphics g )
     {
         super.paintComponent( g );	// clear drawing canvas
-        g.setColor( Color.BLUE );
-        g.drawLine( currX, currY, currX2, currY2 );
+
+        
+        if( shapeType == 1) //create line
+        {
+            shapeList.add(new Line(currX, currY, currX2, currY2, fillColor ));
+        }
+        else if( shapeType == 2 ) //create rectangle
+        {
+            shapeList.add(new Rectangle(currX, currY, currX2, currY2, fillColor ));
+        }
+        else if( shapeType == 3 )//create filled rectangle
+        {
+            
+        }
+        else if( shapeType == 4 ) //create ellipse
+        {
+            shapeList.add(new Ellipse(currX, currY, currX2, currY2, fillColor ));
+        }
+        else if( shapeType == 5) //create filled ellipse
+        {
+            
+        }
+        
+        //draw all shapes in shape list
+        for (Shape s : shapeList) {
+            s.draw(g);
+        }
+        
     }
     
     @Override
@@ -154,6 +189,54 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
     @Override
     public void actionPerformed(ActionEvent ae)
     {
+        if(fill == false)
+            fill = true;
+        else
+            fill = false;
         
     }
+    
+    //color functions
+    public void cColor1(){
+        fillColor = new Color( 255, 0 , 0);
+    }
+    public void cColor2(){
+        fillColor = new Color( 0, 255 , 0);
+    }
+    public void cColor3(){
+        fillColor = new Color( 0, 0 , 255);
+    }
+    public void cColor4(){
+        fillColor = new Color( 255, 255 , 0);
+    }
+    public void cColor5(){
+        fillColor = new Color( 255, 0 , 255);
+    }
+    public void cColor6(){
+        fillColor = new Color( 0, 255, 255);
+    }
+    public void cColor7(){
+        fillColor = new Color( 0, 0 , 0);
+    }
+    public void cColor8(){
+        fillColor = new Color( 255, 255 , 255);
+    }
+    //shape identifyers
+    public void sLine(){
+        shapeType = 1;
+    }
+    public void sRectangle(){
+        shapeType = 2;
+    }
+    public void sRectangleF(){
+        shapeType = 3;
+    }
+    public void sEllipse(){
+        shapeType = 4;
+    }
+    public void sEllipseF(){
+        shapeType = 5;
+    }
+    
+    
 }
