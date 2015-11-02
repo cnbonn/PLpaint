@@ -41,7 +41,7 @@ public class Prog2 {
             }   
         };
         frame.addWindowListener(exitListener);
-     
+        frame.setFocusable(true); //set frame to focous
         frame.pack();
         frame.setVisible(true); //set visible
     }

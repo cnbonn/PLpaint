@@ -9,7 +9,7 @@ package prog2;
  *
  * @author nick
  */
-public class shape {
+public abstract class shape {
     
     protected int xcord;
     protected int ycord;
@@ -17,10 +17,14 @@ public class shape {
     protected int fillColor;
     //constructor
     
-    public shape( int x , int y)
+    public shape( )
     {
-        xcord = x;
-        ycord = y;
+        
+    }
+    
+    public final void draw()
+    {
+        
     }
     
 }

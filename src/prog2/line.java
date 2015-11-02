@@ -9,7 +9,10 @@ package prog2;
  *
  * @author 1905065
  */
-public class line
+public class line extends shape
 {
-    
+    public line()
+    {
+        //this("Line");
+    }
 }
