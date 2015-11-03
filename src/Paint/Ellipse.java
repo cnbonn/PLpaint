@@ -42,6 +42,7 @@ public class Ellipse extends Shape
         }
         this.name = "Ellispe";
         this.fillColor = fillColor;
+        findCenter();
     }
     protected void draw( Graphics g)
     {
@@ -52,12 +53,14 @@ public class Ellipse extends Shape
     
     public String toString()
     {
-        return "shape: "+ name + " ("+x1+","+y1+") & (" +width+","+height+")" ;
+        return "shape: "+ name + " (" + x1 + "," + y1 + ") & (" + width + "," + height + ")" ;
     }
     
     public void move(int newx, int newy)
-    {
-        
+    {           
+        //set new x and y values
+        x1 = newx - width/2;
+        y1 = newy + height/2;              
     }
     
 

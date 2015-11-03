@@ -44,13 +44,12 @@ public class FilledRectangle extends Rectangle{
         this.name = "Rectangle";
         this.outlineColor = outlineColor;
         this.fillColor = fillColor;
+        findCenter();
     }
     protected void draw( Graphics g)
     {
         super.paintComponent(g);
-        
-       
-                
+                       
         g.setColor( fillColor );
         g.fillRect(x1,y1,width,height);
     
@@ -65,7 +64,9 @@ public class FilledRectangle extends Rectangle{
 
     public void move(int newx, int newy)
     {
-        
+        //set new x and y values
+        x1 = newx - width/2;
+        y1 = newy + height/2;  
     }
     
     

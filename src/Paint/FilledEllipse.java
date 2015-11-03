@@ -44,6 +44,7 @@ public class FilledEllipse extends Ellipse {
         this.name = "Filled Ellipse";
         this.outlineColor = outlineColor;
         this.fillColor = fillColor;
+        findCenter();
     }
     protected void draw( Graphics g)
     {
@@ -63,7 +64,9 @@ public class FilledEllipse extends Ellipse {
 
     public void move(int newx, int newy)
     {
-        
+        //set new x and y values
+        x1 = newx - width/2;
+        y1 = newy + height/2;      
     }
 
     

@@ -34,9 +34,7 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
             currX2 = 0 , currY2 = 0;
     
     //for moving one shape, which will be stored in 'moving'
-    private int indexShortest;
-    public ArrayList<Shape> moving = new ArrayList<Shape>();
-    
+    private int indexShortest = 0;
     private boolean leftButtonPress = false;
     private boolean rightButtonPress = false;
     protected Color outlineColor , fillColor;
@@ -44,7 +42,6 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
     private int shapeType = 1;
     private boolean isOutline = true; 
     public ArrayList<Shape> shapeList = new ArrayList<Shape>();  //shape list
-    
     /****************************************
      * function: DrawingPane
      * 
@@ -135,6 +132,7 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
             rightButtonPress = true;
             whichShape();
             System.out.println( "Selected shape at index " + indexShortest);
+
         }
     }
 
@@ -150,12 +148,19 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
         }
         
         else if(rightButtonPress)
-        {
+        {            
+            Shape shapeToMove = shapeList.get(indexShortest);
             this.currX2 = me.getX();
             this.currY2 = me.getY();
             System.out.println( "Mouse right button release: (" + currX2 + "," + currY2 + ")" );                                 
+            shapeToMove.move(currX, currY);
             
+            shapeList.add(shapeToMove);           
+            shapeList.remove(indexShortest);
+            System.out.println("Removed " + indexShortest);
+
             rightButtonPress = false;
+            
             repaint();
         }
     }
@@ -383,10 +388,9 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
                 shortestDistance = distance;
                 this.indexShortest = shapeList.indexOf(s);
             }
-            System.out.println(" index count" + shapeList.indexOf(s));
                                           
         }               
-        System.out.println("index: " + indexShortest);
+        System.out.println("index shortest dist: " + indexShortest);
     }
     
     
