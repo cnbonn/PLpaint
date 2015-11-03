@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package prog2;
+package Paint;
 
 
 import java.awt.Container;
@@ -13,16 +13,13 @@ import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
+import java.awt.KeyboardFocusManager;
+import java.awt.KeyEventDispatcher;
 import java.awt.event.KeyEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-
 import java.awt.BorderLayout;
 import javax.swing.JToggleButton;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+
 
 
 
@@ -30,22 +27,22 @@ import javax.swing.event.ChangeListener;
  *
  * @author nick
  */
-public class window extends JFrame implements KeyListener, ActionListener
+public class window extends JFrame implements ActionListener
 { 
     //private data
     public Container contents;
     public Color outlineColor, fillColor;
-    private JButton  color1, color2, color3, color4, color5, color6,
-            color7, color8, makeLine, makeRectangle, makeRectangleF, makeElipse,
-            makeElipseF;
+    private JButton  outline, fill ,color1, color2, color3, color4, color5, 
+            color6,color7, color8, makeLine, makeRectangle, makeRectangleF, 
+            makeElipse, makeElipseF;
     private JToggleButton toggle;
     DrawingPane canvis;
-    boolean toggled = true;
+    boolean isOutline = true;
 
     window()
     {
-        super("paint");
-        setFocusable(true);
+        super("Paint");
+        //this.setFocusable(true);
         //create drawing screen
         Container pane = getContentPane();
         canvis = new DrawingPane();
@@ -77,9 +74,10 @@ public class window extends JFrame implements KeyListener, ActionListener
         //color format color( float r, float g, float b )
         JPanel colorPanel = new JPanel();
         //toggle button
-        toggle = new JToggleButton ();
+        outline = new JButton( " Outline ");
         
-        
+        fill = new JButton( " Fill ");
+                
         color1 = new JButton("color 1");
         color1.setBackground(new Color(255,0,0));
         
@@ -105,7 +103,8 @@ public class window extends JFrame implements KeyListener, ActionListener
         color8.setBackground(new Color(255,255,255));
       
         //add shapes
-        colorPanel.add(toggle);
+        colorPanel.add(outline);
+        colorPanel.add(fill);
         colorPanel.add(color1);
         colorPanel.add(color2);
         colorPanel.add(color3);
@@ -115,6 +114,8 @@ public class window extends JFrame implements KeyListener, ActionListener
         colorPanel.add(color7);
         colorPanel.add(color8);
         //action listeners for colors
+        outline.addActionListener(this);
+        fill.addActionListener(this);
         color1.addActionListener(this);
         color2.addActionListener(this);
         color3.addActionListener(this);
@@ -151,18 +152,6 @@ public class window extends JFrame implements KeyListener, ActionListener
         } );
         menu.add( mItem );
         
-        //tool menu
-        menu = new JMenu ("Tools");
-        menuBar.add( menu );
-        
-        //colors tools
-        JCheckBoxMenuItem cItem = new JCheckBoxMenuItem ( "Colors" );
-        menu.add( cItem );
-        
-        //shape tools
-        cItem = new JCheckBoxMenuItem( "Shapes" );
-        menu.add( cItem );
-        
         //Help menu
         menu = new JMenu ("Help");
         menuBar.add( menu );
@@ -196,24 +185,45 @@ public class window extends JFrame implements KeyListener, ActionListener
             }
         });
         
-        
+
         menu.add( mItem );
         
         pane.add(shapePanel, BorderLayout.NORTH);
-        //colorPanel.setLayout(4,2,2,4);
         pane.add(colorPanel, BorderLayout.SOUTH);
         
-        //add key listener
-        this.addKeyListener( canvis );
-        
+        //mouse misteners
         this.addMouseWheelListener(canvis);
         this.addMouseMotionListener(canvis);
         this.addMouseListener(canvis);
         
-        
+        //add key listener
+        KeyboardFocusManager.getCurrentKeyboardFocusManager()
+  .addKeyEventDispatcher(new KeyEventDispatcher() {
+      @Override
+      public boolean dispatchKeyEvent(KeyEvent e) {
+        System.out.println("Got key event!" + e);
+        if( e.getKeyCode() == 27 || e.getKeyCode() == 81 )
+        {
+            System.out.println(" quit ");
+            int exit = JOptionPane.showConfirmDialog( null, "Are you sure "
+                    + "you would like to quit?", "Exit Confirmation" ,
+                    JOptionPane.YES_NO_OPTION);
+            if( exit == 0)
+            {
+               System.exit( 0 );
+            }
+        }
+        else if( e.getKeyCode() == 68)
+            System.out.println("Delete");
+        else if(e.getKeyCode() == 67)
+            System.out.println("clear screen");
+        return false;
+      }
+    });
         
        
     }
+    
     
     // required by KeyListener interface
     // key press handler
@@ -221,39 +231,55 @@ public class window extends JFrame implements KeyListener, ActionListener
     public void actionPerformed( ActionEvent evt)
     {
         Object source = evt.getSource();
+        
+        if( source == fill)
+            isOutline = false;   
+        else if ( source == outline)
+            isOutline = true;
+
         //color objects
-        if ( source == color1 ){
-            canvis.cColor1();
-            System.out.println("Color: Red");
+        if ( source == color1 )
+        {
+            canvis.cColor1(isOutline);
+            updateButton(isOutline);
         }
-        else if ( source == color2 ){
-            canvis.cColor2();
-            System.out.println("Color: Green");
+        else if ( source == color2 )
+        {
+            canvis.cColor2(isOutline);
+            updateButton(isOutline);
         }
-        else if ( source == color3 ){
-            canvis.cColor3();
-            System.out.println("Color: Blue");
+        else if ( source == color3 )
+        {
+            canvis.cColor3(isOutline);
+            updateButton(isOutline);
         }
-        else if ( source == color4 ){
-            canvis.cColor4();
-            System.out.println("Color: Yellow");
-        } 
-        else if ( source == color5 ){
-            canvis.cColor5();
-            System.out.println("Color: magenta");
+        else if ( source == color4 )
+        {
+            canvis.cColor4(isOutline);
+            updateButton(isOutline);
         }
-        else if ( source == color6 ){
-            canvis.cColor6();
-            System.out.println("Color: Cyan");
+        else if ( source == color5 )
+        {
+            canvis.cColor5(isOutline);
+            updateButton(isOutline);
         }
-        else if ( source == color7 ){
-            canvis.cColor7();
-            System.out.println("Color: Black");
+        else if ( source == color6 )
+        {
+            canvis.cColor6(isOutline);
+            updateButton(isOutline);
         }
-        else if ( source == color8 ){
-            canvis.cColor8();
-            System.out.println("Color: White");
+        else if ( source == color7 )
+        {
+            canvis.cColor7(isOutline);
+            updateButton(isOutline);
         }
+        else if ( source == color8 )
+        {
+            canvis.cColor8(isOutline);
+            updateButton(isOutline);
+        }
+       
+        
         
         //shape objects
         if ( source == makeLine )
@@ -280,33 +306,32 @@ public class window extends JFrame implements KeyListener, ActionListener
         {
             canvis.sEllipseF();
             System.out.println("Shape: Filled Elipse");
-        }
-        
-        
-        
+        }  
     }
-    @Override
-    public void keyPressed( KeyEvent event )
+    
+    
+    public void updateButton(boolean isOutline)
     {
-        // print key presses
-        System.out.println( "You pressed key: " + ( char )event.getKeyCode()
-                + " (key code " + event.getKeyCode() + ")" );
-        
-        // exit if Escape key is pressed
-        if ( event.getKeyCode() == 27 || event.getKeyCode() == 81){
-            
-            //check for exit
-            int exit = JOptionPane.showConfirmDialog( null, "Are you sure "
-                    + "you would like to quit?", "Exit Confirmation" ,
-                    JOptionPane.YES_NO_OPTION);
-            if( exit == 0)
-            {
-               System.exit( 0 );
-            }
-        }
+        if( isOutline == true)
+            updateOutline();
+        else
+           updateFill();
     }
-    @Override
-    public void keyReleased( KeyEvent event ) { }
-    @Override
-    public void keyTyped( KeyEvent event ) { }
+    public void updateFill()
+    {
+        //update fill
+        this.fillColor = canvis.rFill();
+        this.fill.setBackground(this.fillColor);
+        System.out.println("Set to fill " + fillColor);
+        
+    }
+    
+    public void updateOutline()
+    {
+        //update outline
+        this.outlineColor = canvis.rOutline();
+        this.outline.setBackground(this.outlineColor);
+        this.outline.setFocusable(false);
+        System.out.println("Set to outline " + outlineColor);
+    }
 }

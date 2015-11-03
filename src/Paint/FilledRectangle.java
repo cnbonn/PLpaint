@@ -1,29 +1,31 @@
+package Paint;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package prog2;
-
-import java.awt.Color;
-import java.awt.Graphics;
-
 /**
  *
- * @author 1905065
+ * @author nick
  */
-public class Ellipse extends Shape
-{
+public class FilledRectangle extends Rectangle{
     protected int x1, y1 ,width , height;
- 
-    public Ellipse()
+    protected Color fillColor, outlineColor;
+    
+    
+    public FilledRectangle()
     {
         x1 = 0;
         y1 = 0;
         width = 0;
         height = 0;
     }
-    public Ellipse( int x1, int y1, int x2, int y2, Color fillColor)
+    public FilledRectangle( int x1, int y1, int x2, int y2,Color fillColor,
+            Color outlineColor)
     {
         if( x1 < x2 && y1 < y2)
         {
@@ -39,14 +41,22 @@ public class Ellipse extends Shape
             this.width = x1-x2;
             this.height = y1-y2;
         }
+        this.outlineColor = outlineColor;
         this.fillColor = fillColor;
     }
     protected void draw( Graphics g)
     {
         super.paintComponent(g);
+        
+       
+                
         g.setColor( fillColor );
-        g.drawOval(x1,y1,width,height);
+        g.fillRect(x1,y1,width,height);
+    
+        g.setColor( outlineColor );
+        g.drawRect(x1,y1,width,height);
     }
+        
     public void move()
     {
         

@@ -1,4 +1,4 @@
-package prog2;
+package Paint;
 
 
 import java.awt.Color;
@@ -6,17 +6,13 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputListener;
-import javax.swing.JList;
 import java.util.ArrayList;
 
 /*
@@ -29,15 +25,16 @@ import java.util.ArrayList;
  * @author nick
  */
 public class DrawingPane extends JPanel implements  ActionListener, MouseWheelListener,
-        MouseInputListener, KeyListener, MouseListener
+        MouseInputListener,  MouseListener
 {
     //private data
     private int currX = 0, currY = 0, newX = 0, newY = 0,
             currX2 = 0 , currY2 = 0;
     private boolean leftButtonPress = false;
-    private Color outlineColor , fillColor;
+    protected Color outlineColor , fillColor;
     private boolean fill;
     private int shapeType = 1;
+    private boolean isOutline = true;
     
     public ArrayList<Shape> shapeList = new ArrayList<Shape>();
     
@@ -45,6 +42,7 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
     public DrawingPane()
     {
         shapeList = new ArrayList();
+        super.setFocusable(true); //set frame to focous
         addMouseListener( this );
         this.setBackground(Color.white);
         repaint();
@@ -63,27 +61,19 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
     {
         super.paintComponent( g );	// clear drawing canvas
 
-        
         if( shapeType == 1) //create line
-        {
-            shapeList.add(new Line(currX, currY, currX2, currY2, fillColor ));
-        }
+            shapeList.add(new Line(currX, currY, currX2, currY2, outlineColor ));
         else if( shapeType == 2 ) //create rectangle
-        {
-            shapeList.add(new Rectangle(currX, currY, currX2, currY2, fillColor ));
-        }
+            shapeList.add(new Rectangle(currX, currY, currX2, currY2,
+                    outlineColor ));
         else if( shapeType == 3 )//create filled rectangle
-        {
-            
-        }
+            shapeList.add(new FilledRectangle(currX, currY, currX2, currY2,
+                    fillColor, outlineColor ));
         else if( shapeType == 4 ) //create ellipse
-        {
-            shapeList.add(new Ellipse(currX, currY, currX2, currY2, fillColor ));
-        }
+            shapeList.add(new Ellipse(currX, currY, currX2, currY2, outlineColor ));
         else if( shapeType == 5) //create filled ellipse
-        {
-            
-        }
+            shapeList.add(new FilledEllipse(currX, currY, currX2, currY2,
+                    fillColor, outlineColor ));
         
         //draw all shapes in shape list
         for (Shape s : shapeList) {
@@ -162,30 +152,7 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
         this.repaint();
         
     }
-    
-    @Override
-    public void keyPressed( KeyEvent event )
-    {
-        // print key presses
-        System.out.println( "You pressed key: " + ( char )event.getKeyCode() + " (key code " + event.getKeyCode() + ")" );
-        
-        // exit if Escape key is pressed
-        if ( event.getKeyCode() == 27 || event.getKeyCode() == 81){
-            
-            //check for exit
-            int exit = JOptionPane.showConfirmDialog( null, "Are you sure "
-                    + "you would like to quit?", "Exit Confirmation" ,
-                    JOptionPane.YES_NO_OPTION);
-            if( exit == 0)
-            {
-               System.exit( 0 );
-            }
-        }
-    }
-    @Override
-    public void keyReleased( KeyEvent event ) { }
-    @Override
-    public void keyTyped( KeyEvent event ) { }
+   
     @Override
     public void actionPerformed(ActionEvent ae)
     {
@@ -197,29 +164,102 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
     }
     
     //color functions
-    public void cColor1(){
-        fillColor = new Color( 255, 0 , 0);
+    public void cColor1(boolean color){
+        isOutline = color;
+        if( isOutline == false)
+        {
+            System.out.println("Fill Color: Red");
+            this.fillColor = new Color( 255, 0 , 0);
+        }
+        else
+        {
+            System.out.println("Outline Color: Red");
+            this.outlineColor = new Color( 255, 0 , 0);   
+        }
     }
-    public void cColor2(){
-        fillColor = new Color( 0, 255 , 0);
+    public void cColor2(boolean isOutline){
+        if( isOutline == false)
+        {
+            System.out.println("Fill Color: Green");
+            this.fillColor = new Color( 0, 255 , 0);
+        }
+        else
+        {
+            System.out.println("Outline Color: Green");
+            this.outlineColor = new Color( 0, 255 , 0);
+        }
     }
-    public void cColor3(){
-        fillColor = new Color( 0, 0 , 255);
+    public void cColor3(boolean isOutline){
+        if( isOutline == false)
+        {
+            System.out.println("Fill Color: Blue");
+            this.fillColor = new Color( 0, 0 , 255);
+        }
+        else 
+        {
+            System.out.println("Outline Color: Blue");
+            this.outlineColor = new Color( 0, 0 , 255);
+        }
     }
-    public void cColor4(){
-        fillColor = new Color( 255, 255 , 0);
+    public void cColor4(boolean isOutline){
+        if( isOutline == false)
+        {
+            System.out.println("Fill Color: Yellow");
+            this.fillColor = new Color( 255, 255 , 0);
+        }
+        else 
+        {
+            System.out.println("Outline Color: Yellow");
+            this.outlineColor = new Color( 255, 255 , 0);
+        }
     }
-    public void cColor5(){
-        fillColor = new Color( 255, 0 , 255);
+    public void cColor5(boolean isOutline){
+        if( isOutline == false)
+        {
+            System.out.println("Fill Color: Magenta");
+            this.fillColor = new Color( 255, 0 , 255);
+        }
+        else 
+        {
+            System.out.println("Outline Color: Magenta");
+            this.outlineColor = new Color( 255, 0 , 255);
+        }
     }
-    public void cColor6(){
-        fillColor = new Color( 0, 255, 255);
+    public void cColor6(boolean isOutline){
+        if( isOutline == false)
+        {
+            System.out.println("Fill Color: Cyan");
+            this.fillColor = new Color( 0, 255, 255);
+        }
+        else 
+        {
+            System.out.println("Outline Color: Cyan");
+            this.outlineColor = new Color( 0, 255 , 255);
+        }
     }
-    public void cColor7(){
-        fillColor = new Color( 0, 0 , 0);
+    public void cColor7(boolean isOutline){
+        if( isOutline == false)
+        {
+            System.out.println("Fill Color: Black");
+            this.fillColor = new Color( 0, 0 , 0);
+        }
+        else 
+        {
+            System.out.println("Outline Color: Black");
+            this.outlineColor = new Color( 0, 0 , 0);
+        }
     }
-    public void cColor8(){
-        fillColor = new Color( 255, 255 , 255);
+    public void cColor8(boolean isOutline){
+        if( isOutline == false)
+        {
+            System.out.println("Fill Color: White");
+            this.fillColor = new Color( 255, 255 , 255);
+        }
+        else 
+        {
+            System.out.println("Outline Color: White");
+            this.outlineColor = new Color( 255, 255 , 255);
+        }
     }
     //shape identifyers
     public void sLine(){
@@ -236,6 +276,15 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
     }
     public void sEllipseF(){
         shapeType = 5;
+    }
+    
+    public Color rFill()
+    {
+        return fillColor;
+    }
+    public Color rOutline()
+    {
+        return outlineColor;
     }
     
     

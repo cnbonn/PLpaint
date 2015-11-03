@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package prog2;
+package Paint;
 
 /**
  *
@@ -11,11 +11,10 @@ package prog2;
  */
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 
         
-public class Prog2 {
+public class Paint {
 
     /**
      * @param args the command line arguments

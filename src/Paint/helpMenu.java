@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package prog2;
+package Paint;
 
 import javax.swing.*;
 /**
@@ -14,7 +14,7 @@ public class helpMenu extends JFrame {
     
     helpMenu()
     {
-        super( "HELP MENU");
+        super( "HELP MENU" );
         
     }
     public void helpaMenu()
