@@ -15,9 +15,11 @@ import java.awt.Graphics;
  */
 public abstract class Shape extends JPanel
 {
-    
+    protected int centerx, centery;
 
     protected int currx1, curry1, currx2, curry2;
+    protected int newx, newy;
+    protected String name;
     protected Color outlineColor, fillColor;
     //constructor
     
@@ -25,6 +27,7 @@ public abstract class Shape extends JPanel
     {
         currx1 = 0;
         curry1 = 0;
+        this.name = name;
     }
     
     public Shape( int x, int y)
@@ -37,7 +40,15 @@ public abstract class Shape extends JPanel
     {
         super.paintComponent(g);
     }
-    abstract public void move();
-    //abstract public String toString();
+    abstract public void move(int newx, int newy);
+            
+    public String toString()
+    {
+        return" Shape: " + name;
+                
+    }
+    
+    abstract protected void findCenter();
+
     
 }

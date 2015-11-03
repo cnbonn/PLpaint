@@ -39,6 +39,7 @@ public class Rectangle extends Shape
             this.y1 = y2;
             this.width = x1-x2;
             this.height = y1-y2;
+            this.name = "Rectangle";
         }
         this.outlineColor = outlineColor;
     }
@@ -48,8 +49,21 @@ public class Rectangle extends Shape
         g.setColor( outlineColor );
         g.drawRect(x1,y1,width,height);
     }
-    public void move()
+    
+        public String toString()
+    {
+        return "shape: "+ name + " ("+x1+","+y1+") & (" +width +","+height+")" ;
+    }
+    
+    public void move(int newx, int newy)
     {
         
+    }
+    
+    
+    protected void findCenter()
+    {
+        this.centerx = x1 + width/2;
+        this.centery = y1 - height/2;              
     }
 }

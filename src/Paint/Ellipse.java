@@ -40,6 +40,7 @@ public class Ellipse extends Shape
             this.width = x1-x2;
             this.height = y1-y2;
         }
+        this.name = "Ellispe";
         this.fillColor = fillColor;
     }
     protected void draw( Graphics g)
@@ -48,8 +49,21 @@ public class Ellipse extends Shape
         g.setColor( fillColor );
         g.drawOval(x1,y1,width,height);
     }
-    public void move()
+    
+    public String toString()
+    {
+        return "shape: "+ name + " ("+x1+","+y1+") & (" +width+","+height+")" ;
+    }
+    
+    public void move(int newx, int newy)
     {
         
+    }
+    
+
+    protected void findCenter()
+    {
+        this.centerx = x1 + width/2;
+        this.centery = y1 - height/2;    
     }
 }

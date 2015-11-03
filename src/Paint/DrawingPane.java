@@ -30,7 +30,13 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
     //private data
     private int currX = 0, currY = 0, newX = 0, newY = 0,
             currX2 = 0 , currY2 = 0;
+    
+    //for moving one shape, which will be stored in 'moving'
+    private int indexShortest;
+    public ArrayList<Shape> moving = new ArrayList<Shape>();
+    
     private boolean leftButtonPress = false;
+    private boolean rightButtonPress = false;
     protected Color outlineColor , fillColor;
     private boolean fill;
     private int shapeType = 1;
@@ -107,6 +113,16 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
             System.out.println( "Mouse left button click: (" + currX + "," + currY + ")" );
             leftButtonPress = true;
         }
+        
+        else if( SwingUtilities.isRightMouseButton( me ))
+        {
+            this.currX = me.getX();
+            this.currY = me.getY();
+            System.out.println( "Mouse right button click: (" + currX + "," + currY + ")" );
+            rightButtonPress = true;
+            whichShape();
+            System.out.println( "Selected shape at index " + indexShortest);
+        }
     }
 
     @Override
@@ -116,7 +132,17 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
             this.currX2 = me.getX();
             this.currY2 = me.getY();
             System.out.println( "Mouse left button release: (" + currX2 + "," + currY2 + ")" );
-            leftButtonPress = false;
+            leftButtonPress = false;          
+            repaint();
+        }
+        
+        else if(rightButtonPress)
+        {
+            this.currX2 = me.getX();
+            this.currY2 = me.getY();
+            System.out.println( "Mouse right button release: (" + currX2 + "," + currY2 + ")" );                                 
+            
+            rightButtonPress = false;
             repaint();
         }
     }
@@ -138,7 +164,7 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
         
         this.newX = me.getX();
         this.newY = me.getY();
-        
+
         this.repaint();
     }
 
@@ -285,6 +311,37 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
     public Color rOutline()
     {
         return outlineColor;
+    }
+    
+    
+    public void whichShape()
+    {
+        double shortestDistance = 90000;
+        double distance;      
+        int xDiff, yDiff;    
+              
+        for (Shape s : shapeList) 
+        {
+            System.out.println("shape: " + s.toString() );
+            //use pythagorean theorem to determine distance
+            //between clicked x, y and the x, y of shape s
+            
+            System.out.println("X: " + s.centerx);
+            System.out.println("Y: " + s.centery);
+            xDiff = (currX- s.centerx)* (currX - s.centerx);
+            yDiff = (currY - s.centery)*(currY - s.centery);           
+            distance = Math.sqrt(xDiff + yDiff);
+            
+            System.out.println("DISTANCE: " + distance);
+            if(distance  < shortestDistance)
+            {
+                shortestDistance = distance;
+                this.indexShortest = shapeList.indexOf(s);
+            }
+            System.out.println(" index count" + shapeList.indexOf(s));
+                                          
+        }               
+        System.out.println("index: " + indexShortest);
     }
     
     

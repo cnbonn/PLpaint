@@ -28,6 +28,7 @@ public class Line extends Shape
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
+        this.name = "Line";
         this.fillColor = fillColor;
     }
     protected void draw( Graphics g)
@@ -36,8 +37,26 @@ public class Line extends Shape
         g.setColor( fillColor );
         g.drawLine(x1,y1,x2,y2);
     }
-    public void move()
+    
+    public String toString()
     {
-        
+        return "shape: "+ name + " ("+x1+","+y1+") & (" +x2+","+y2+")" ;
+    }
+    
+    public void move( int newx, int newy)
+    {
+    
+   
+        //save shape temporarily
+        //delete line
+     
+                        
+    }
+    
+    
+    protected void findCenter()
+    {
+        this.centerx = (x2 + x1)/2;
+        this.centery = (y2 + y1)/2;
     }
 }
