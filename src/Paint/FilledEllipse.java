@@ -50,10 +50,10 @@ public class FilledEllipse extends Ellipse {
         super.paintComponent(g);
                             
         g.setColor( fillColor );
-        g.fillRect(x1,y1,width,height);
+        g.fillOval(x1,y1,width,height);
     
         g.setColor( outlineColor );
-        g.drawRect(x1,y1,width,height);
+        g.drawOval(x1,y1,width,height);
     }
      
     public String toString()

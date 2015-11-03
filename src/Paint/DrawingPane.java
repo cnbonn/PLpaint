@@ -15,15 +15,17 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputListener;
 import java.util.ArrayList;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
+
+/******************************************************************
+ * class: drawingPane
+ * impliments: actionlistener, mousewheellistener, mouseinputlistener
+ * mouselistener
  * @author nick
- */
+ * 
+ * This class handles all the drawing and storing of shapes that have been
+ * drawn. It class classes that impliment shapes to be drawn
+ * 
+ ************************************************************************/
 public class DrawingPane extends JPanel implements  ActionListener, MouseWheelListener,
         MouseInputListener,  MouseListener
 {
@@ -40,15 +42,18 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
     protected Color outlineColor , fillColor;
     private boolean fill;
     private int shapeType = 1;
-    private boolean isOutline = true;
+    private boolean isOutline = true; 
+    public ArrayList<Shape> shapeList = new ArrayList<Shape>();  //shape list
     
-    public ArrayList<Shape> shapeList = new ArrayList<Shape>();
-    
-    
+    /****************************************
+     * function: DrawingPane
+     * 
+     * this sets up the basic drawing surface
+     * to be filled with shapes.
+     **************************************/
     public DrawingPane()
     {
         shapeList = new ArrayList();
-        super.setFocusable(true); //set frame to focous
         addMouseListener( this );
         this.setBackground(Color.white);
         repaint();
@@ -62,6 +67,14 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
         return new Dimension( 800, 600 );
     }
     
+    /************************************
+     * paintComponenet
+     * @param g 
+     * 
+     * overrides paint component to call 
+     * custom shape drawing methods.
+     * 
+     *********************************/
     @Override
     protected void paintComponent( Graphics g )
     {
@@ -88,7 +101,7 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
         
     }
     
-    @Override
+    @Override  //unused
     public void mouseWheelMoved(MouseWheelEvent mwe) {
 
     }
@@ -178,7 +191,13 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
         this.repaint();
         
     }
-   
+    /*********************************8
+     * function: actionPerformed
+     * @param ae 
+     * 
+     * override actionperformed to change state
+     * of fill.
+     ******************/
     @Override
     public void actionPerformed(ActionEvent ae)
     {
@@ -189,9 +208,16 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
         
     }
     
-    //color functions
-    public void cColor1(boolean color){
-        isOutline = color;
+    /****************************************
+     * functions: cColor(1-8) 
+     * @param isOutline
+     * 
+     * for each function of cColor
+     * sets the color of the outline or fill
+     * based off of isOutline to the specified color
+     * then prints a message to the screen.
+     ***************************************/
+    public void cColor1(boolean isOutline){
         if( isOutline == false)
         {
             System.out.println("Fill Color: Red");
@@ -287,7 +313,15 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
             this.outlineColor = new Color( 255, 255 , 255);
         }
     }
-    //shape identifyers
+    
+    
+    /****************************
+     * Functions: shape identifers
+     * 
+     * sets the shape to the user specified
+     * shape.
+     * 
+     */
     public void sLine(){
         shapeType = 1;
     }
@@ -303,11 +337,22 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
     public void sEllipseF(){
         shapeType = 5;
     }
-    
+    /**********************8
+     * function: rFill
+     * @return 
+     * 
+     * returns the color of fillColor
+     ************/
     public Color rFill()
     {
         return fillColor;
     }
+    /**********************8
+     * function: rOutline
+     * @return 
+     * 
+     * returns the color of outlineColor
+     ************/
     public Color rOutline()
     {
         return outlineColor;

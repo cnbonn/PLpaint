@@ -9,8 +9,7 @@ package Paint;
 import java.awt.Container;
 import javax.swing.*;
 import javax.swing.JOptionPane;
-
-
+import java.awt.Dialog;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -23,10 +22,14 @@ import javax.swing.JToggleButton;
 
 
 
-/**
- *
+/****************************************************
+ * class: window
+ * Implements: actionlistener
  * @author nick
- */
+ * 
+ * this class sets up the main gui and creates button
+ * connections to actions. 
+ *****************************************************/
 public class window extends JFrame implements ActionListener
 { 
     //private data
@@ -161,12 +164,20 @@ public class window extends JFrame implements ActionListener
         {
             public void actionPerformed( ActionEvent ae)
             {
-                JFrame help = new helpMenu();
-                help.pack();
-                help.setLocationRelativeTo( null );
-                help.setSize(300,300);
-                help.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                help.setVisible(true);
+                JOptionPane.showMessageDialog(null , "Welcome to the Help Menu\n"
+                        + "To Draw click on the screen and drag to draw\n"
+                        + "To select a color click on the buttion you want\n\t"
+                        + " to change the color of ( fill or outline)\n"
+                        + "To change you shape click on the shape you\n"
+                        + "\t want to draw\n"
+                        + "\n\n"
+                        + "HOTKEYS\n"
+                        + "Q or Esc : quit the program\n"
+                        + "C : clear the screen\n"
+                        + "D: delete the last object"
+                        
+                );
+                
             }
         });
         menu.add( mItem );
@@ -176,18 +187,18 @@ public class window extends JFrame implements ActionListener
         {
             public void actionPerformed( ActionEvent ae)
             {
-                JFrame aboutMenu = new helpMenu();
-                aboutMenu.pack();
-                aboutMenu.setLocationRelativeTo( null );
-                aboutMenu.setSize(300,300);
-                aboutMenu.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                aboutMenu.setVisible(true);
+                JOptionPane.showMessageDialog(null , "Paint v.0.0.1\n"
+                        + "Created by Charles Bonn\n"
+                        + "\tand\n"
+                        + "Kendra Deziel\n"
+                        + "Programming langugages 2015"
+                        
+                );
             }
         });
         
-
         menu.add( mItem );
-        
+        //add tool panels
         pane.add(shapePanel, BorderLayout.NORTH);
         pane.add(colorPanel, BorderLayout.SOUTH);
         
@@ -225,13 +236,19 @@ public class window extends JFrame implements ActionListener
     }
     
     
-    // required by KeyListener interface
-    // key press handler
+    /*******************************************
+     * function: action performed
+     * @param evt 
+     * @override
+     * 
+     * handles button clicks and directs them to
+     * change drawing varables.
+     *******************************************/
     @Override
     public void actionPerformed( ActionEvent evt)
     {
         Object source = evt.getSource();
-        
+        //if fill shape is selected
         if( source == fill)
             isOutline = false;   
         else if ( source == outline)
@@ -279,8 +296,6 @@ public class window extends JFrame implements ActionListener
             updateButton(isOutline);
         }
        
-        
-        
         //shape objects
         if ( source == makeLine )
         { 
@@ -309,7 +324,13 @@ public class window extends JFrame implements ActionListener
         }  
     }
     
-    
+    /**********************************************
+     * Function: updateButton
+     * @param isOutline
+     * 
+     * based on the input of isOutline, will update
+     * the button color of outline or fill
+     *************************************************/
     public void updateButton(boolean isOutline)
     {
         if( isOutline == true)
@@ -317,6 +338,13 @@ public class window extends JFrame implements ActionListener
         else
            updateFill();
     }
+    
+    /****************************************
+     * Function updateFill
+     * 
+     * this will grab the color of fill and 
+     * set the fill button to match this color
+     *****************************************/
     public void updateFill()
     {
         //update fill
@@ -325,7 +353,13 @@ public class window extends JFrame implements ActionListener
         System.out.println("Set to fill " + fillColor);
         
     }
-    
+    /*************************************
+     * function updateOutline
+     * 
+     * this will grab the color of outline
+     * and set the outline button to match
+     * this color
+     *************************************/
     public void updateOutline()
     {
         //update outline
