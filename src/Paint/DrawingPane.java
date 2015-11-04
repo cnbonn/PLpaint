@@ -45,6 +45,8 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
     //public data
     public ArrayList<Shape> shapeList = new ArrayList<Shape>();  //shape list
     
+    //functions
+    
     /****************************************
      * function: DrawingPane
      * 
@@ -110,13 +112,6 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
         
     }
     
-    /************ unused function **********************/
-    @Override  
-    public void mouseWheelMoved(MouseWheelEvent mwe) 
-    {
-
-    }
-
     
     /***********************************************
      * function mouseClicked
@@ -135,16 +130,6 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
         System.out.println("click");
     }
     
-    
-    public void rePaint(Graphics g)
-    {
-        for (Shape s : shapeList)
-        {
-        if(rightButtonPress)
-            continue;
-        s.draw(g);
-        }
-    }
 
     /********************************************
      * function mousePressed
@@ -200,21 +185,29 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
         
         else if(rightButtonPress)
         {            
-            this.currX = me.getX();
-            this.currY = me.getY();
+            this.currX2 = currX = me.getX();
+            this.currY2 = currY = me.getY();
             System.out.println( "Mouse right button release: (" + currX2 + "," + currY2 + ")" );   
             
             Shape shapeToMove = shapeList.get(indexShortest);    //move shape by getting its information,                 
-            shapeToMove.move(currX, currY);                    //creating a copy at new location,           
+            shapeToMove.move(currX2, currY2);                    //creating a copy at new location,           
             shapeList.add(shapeToMove);                          //adding altered shape to list       
-            shapeList.remove(indexShortest);                     //and removing the old shape
+            shapeList.remove(indexShortest);                     //and removing the old shape     
             
             System.out.println("Removed " + indexShortest);      
             repaint();
-            rightButtonPress = false;             
+            rightButtonPress = false;            
         }
     }
+    
+    
+    /************ unused function **********************/
+    @Override  
+    public void mouseWheelMoved(MouseWheelEvent mwe) 
+    {
 
+    }
+    
     
     /******** unused function ***************/
     @Override
