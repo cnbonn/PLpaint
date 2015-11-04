@@ -45,6 +45,7 @@ public class window extends JFrame implements ActionListener
     window()
     {
         super("Paint");
+        
         //this.setFocusable(true);
         //create drawing screen
         Container pane = getContentPane();
@@ -225,14 +226,24 @@ public class window extends JFrame implements ActionListener
             }
         }
         else if( e.getKeyCode() == 68)
+          {
+            canvis.delete();
             System.out.println("Delete");
+          }
         else if(e.getKeyCode() == 67)
+        {
+            canvis.clearScreen();
             System.out.println("clear screen");
+            
+            
+          }
+        canvis.repaint();
+        canvis.revalidate();;
         return false;
       }
     });
         
-       
+       pack();
     }
     
     

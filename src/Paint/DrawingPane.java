@@ -13,6 +13,7 @@ import java.awt.event.MouseWheelListener;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputListener;
+import java.util.List;
 import java.util.ArrayList;
 
 
@@ -35,7 +36,7 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
     
     //for moving one shape, which will be stored in 'moving'
     private int indexShortest;
-    public ArrayList<Shape> moving = new ArrayList<Shape>();
+    public List<Shape> moving = new ArrayList<Shape>();
     
     private boolean leftButtonPress = false;
     private boolean rightButtonPress = false;
@@ -43,7 +44,8 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
     private boolean fill;
     private int shapeType = 1;
     private boolean isOutline = true; 
-    public ArrayList<Shape> shapeList = new ArrayList<Shape>();  //shape list
+    public List<Shape> shapeList = new ArrayList<Shape>();  //shape list
+    private Graphics g;
     
     /****************************************
      * function: DrawingPane
@@ -56,7 +58,7 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
         shapeList = new ArrayList();
         addMouseListener( this );
         this.setBackground(Color.white);
-        repaint();
+        this.repaint();
     }
     
     
@@ -95,8 +97,8 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
                     fillColor, outlineColor ));
         
         //draw all shapes in shape list
-        for (Shape s : shapeList) {
-            s.draw(g);
+        for (Shape shape : shapeList) {
+            shape.draw(g);
         }
         
     }
@@ -206,6 +208,7 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
         else
             fill = false;
         
+        repaint();
     }
     
     /****************************************
@@ -387,6 +390,21 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
                                           
         }               
         System.out.println("index: " + indexShortest);
+    }
+    //clears the screen
+    public void clearScreen()
+    {
+        shapeList.clear();
+        this.repaint();
+    }
+    
+    //delete top most object
+    public void delete()
+    {
+        System.out.println("Size of al before deletions: " + shapeList.size());
+        shapeList.remove(shapeList.size() - 1);
+        System.out.println("Size of al after deletions: " + shapeList.size());
+        this.repaint();
     }
     
     
