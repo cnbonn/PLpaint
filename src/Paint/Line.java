@@ -9,7 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 /**
  *
- * @author 1905065
+ * @author Nick and Kendra
  */
 public class Line extends Shape
 {
@@ -30,6 +30,7 @@ public class Line extends Shape
         this.y2 = y2;
         this.name = "Line";
         this.fillColor = fillColor;
+        findCenter();
     }
     protected void draw( Graphics g)
     {
@@ -45,12 +46,16 @@ public class Line extends Shape
     
     public void move( int newx, int newy)
     {
-    
-   
-        //save shape temporarily
-        //delete line
-     
-                        
+        //set temporary variables for one point
+        int tempX1 = x1;
+        int tempY1 = y1;
+        
+        //set new values for x1, y1, x2, and y2
+        this.x1 = newx - centerx + x2;
+        this.y1 = newy - centery + y2;
+        this.x2 = newx - centerx + tempX1;
+        this.y2 = newy - centery + tempY1; 
+        
     }
     
     

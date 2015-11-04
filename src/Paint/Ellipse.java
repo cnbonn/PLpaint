@@ -11,7 +11,7 @@ import java.awt.Graphics;
 
 /**
  *
- * @author 1905065
+ * @author Nick and Kendra
  */
 public class Ellipse extends Shape
 {
@@ -26,6 +26,7 @@ public class Ellipse extends Shape
     }
     public Ellipse( int x1, int y1, int x2, int y2, Color fillColor)
     {
+        //user gives upper left hand corner first
         if( x1 < x2 && y1 < y2)
         {
             this.x1 = x1;
@@ -33,6 +34,8 @@ public class Ellipse extends Shape
             this.width = x2-x1;
             this.height = y2-y1;
         }
+        
+        //user gives lower right hand corner first
         else if (x1 > x2 && y1 > y2 )
         {
             this.x1 = x2;
@@ -40,8 +43,28 @@ public class Ellipse extends Shape
             this.width = x1-x2;
             this.height = y1-y2;
         }
+        
+        //user gives upper right hand corner first
+        else if(x1 > x2 && y1 < y2)
+        {
+            this.x1 = x2;
+            this.y1 = y1;
+            this.width = x1 - x2;
+            this.height = y2 - y1;
+        }
+        
+        //user gives lower left hand corner first
+        else if(x1 < x2 && y1 > y2)
+        {
+            this.x1 = x1;
+            this.y1 = y2;
+            this.width = x2 - x1;
+            this.height = y1 - y2;           
+        }
+        
         this.name = "Ellispe";
         this.fillColor = fillColor;
+        findCenter();
     }
     protected void draw( Graphics g)
     {
@@ -52,18 +75,20 @@ public class Ellipse extends Shape
     
     public String toString()
     {
-        return "shape: "+ name + " ("+x1+","+y1+") & (" +width+","+height+")" ;
+        return "shape: "+ name + " (" + x1 + "," + y1 + ") & (" + width + "," + height + ")" ;
     }
     
     public void move(int newx, int newy)
-    {
-        
+    {           
+        //set new x and y values
+        x1 = newx - width/2;
+        y1 = newy - height/2;    
     }
     
 
     protected void findCenter()
     {
         this.centerx = x1 + width/2;
-        this.centery = y1 - height/2;    
+        this.centery = y1 + height/2;    
     }
 }
