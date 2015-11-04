@@ -10,7 +10,7 @@ import java.awt.Graphics;
  */
 /**
  *
- * @author nick
+ * @author Nick and Kendra
  */
 public class FilledEllipse extends Ellipse {
     protected int x1, y1 ,width , height;

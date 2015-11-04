@@ -25,7 +25,7 @@ import javax.swing.JToggleButton;
 /****************************************************
  * class: window
  * Implements: actionlistener
- * @author nick
+ * @author Nick
  * 
  * this class sets up the main gui and creates button
  * connections to actions. 
@@ -81,28 +81,28 @@ public class window extends JFrame implements ActionListener
         
         fill = new JButton( " Fill ");
                 
-        color1 = new JButton("color 1");
+        color1 = new JButton("RED");
         color1.setBackground(new Color(255,0,0));
         
-        color2 = new JButton("color 2");
+        color2 = new JButton("GREEN");
         color2.setBackground(new Color(0,255,0));
          
-        color3 = new JButton("color 3");
+        color3 = new JButton("BLUE");
         color3.setBackground(new Color(0,0,255));
          
-        color4 = new JButton("color 4");
+        color4 = new JButton("YELLOW");
         color4.setBackground(new Color(255,255,0));
         
-        color5 = new JButton("color 5");
+        color5 = new JButton("MAGENTA");
         color5.setBackground(new Color(255,0,255));
          
-        color6 = new JButton("color 6");
+        color6 = new JButton("CYAN");
         color6.setBackground(new Color(0,255,255));
         
-        color7 = new JButton("color 7");
+        color7 = new JButton("BLACK");
         color7.setBackground(new Color(0,0,0));
         
-        color8 = new JButton("color 8");
+        color8 = new JButton("WHITE");
         color8.setBackground(new Color(255,255,255));
       
         //add shapes
@@ -116,6 +116,7 @@ public class window extends JFrame implements ActionListener
         colorPanel.add(color6);
         colorPanel.add(color7);
         colorPanel.add(color8);
+        
         //action listeners for colors
         outline.addActionListener(this);
         fill.addActionListener(this);
@@ -242,7 +243,7 @@ public class window extends JFrame implements ActionListener
      * @override
      * 
      * handles button clicks and directs them to
-     * change drawing varables.
+     * change drawing variables.
      *******************************************/
     @Override
     public void actionPerformed( ActionEvent evt)

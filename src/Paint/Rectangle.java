@@ -11,7 +11,7 @@ import Paint.Shape;
 
 /**
  *
- * @author 1905065
+ * @author Nick and Kendra
  */
 public class Rectangle extends Shape
 {
@@ -62,6 +62,7 @@ public class Rectangle extends Shape
             this.height = y1 - y2;           
         }
         
+        this.name = "Rectangle";
         this.outlineColor = outlineColor;
         findCenter();
     }

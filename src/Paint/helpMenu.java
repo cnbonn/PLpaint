@@ -8,15 +8,15 @@ package Paint;
 import javax.swing.*;
 /**
  *
- * @author 1905065
+ * @author Nick
  */
 public class helpMenu extends JFrame {
     
     helpMenu()
     {
         super( "HELP MENU" );
-        
     }
+    
     public void helpaMenu()
     {
         System.out.println("helpa");

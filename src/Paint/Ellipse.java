@@ -11,7 +11,7 @@ import java.awt.Graphics;
 
 /**
  *
- * @author 1905065
+ * @author Nick and Kendra
  */
 public class Ellipse extends Shape
 {

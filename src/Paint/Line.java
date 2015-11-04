@@ -9,7 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 /**
  *
- * @author 1905065
+ * @author Nick and Kendra
  */
 public class Line extends Shape
 {
@@ -55,6 +55,7 @@ public class Line extends Shape
         this.y1 = newy - centery + y2;
         this.x2 = newx - centerx + tempX1;
         this.y2 = newy - centery + tempY1; 
+        
     }
     
     

@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import java.awt.Graphics;
 /**
  *
- * @author nick
+ * @author Nick and Kendra
  */
 public abstract class Shape extends JPanel
 {
@@ -40,15 +40,14 @@ public abstract class Shape extends JPanel
     {
         super.paintComponent(g);
     }
+    
     abstract public void move(int newx, int newy);
             
     public String toString()
     {
-        return" Shape: " + name;
-                
+        return" Shape: " + name;               
     }
     
     abstract protected void findCenter();
-
-    
+ 
 }

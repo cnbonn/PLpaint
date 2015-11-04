@@ -10,7 +10,7 @@ import java.awt.Graphics;
  */
 /**
  *
- * @author nick
+ * @author Nick and Kendra
  */
 public class FilledRectangle extends Rectangle{
     protected int x1, y1 ,width , height;
@@ -63,7 +63,7 @@ public class FilledRectangle extends Rectangle{
             this.height = y1 - y2;           
         }
         
-        this.name = "Rectangle";
+        this.name = "Filled Rectangle";
         this.outlineColor = outlineColor;
         this.fillColor = fillColor;
         findCenter();

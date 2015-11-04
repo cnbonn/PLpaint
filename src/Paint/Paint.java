@@ -7,7 +7,7 @@ package Paint;
 
 /**
  *
- * @author nick
+ * @author Nick
  */
 
 import javax.swing.*;
