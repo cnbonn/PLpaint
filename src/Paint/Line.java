@@ -55,8 +55,6 @@ public class Line extends Shape
         this.y1 = newy - centery + y2;
         this.x2 = newx - centerx + tempX1;
         this.y2 = newy - centery + tempY1; 
-        centerx = newx;
-        centery = newy;
     }
     
     

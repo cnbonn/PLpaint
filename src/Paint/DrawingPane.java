@@ -149,18 +149,17 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
         
         else if(rightButtonPress)
         {            
-            Shape shapeToMove = shapeList.get(indexShortest);
             this.currX2 = me.getX();
             this.currY2 = me.getY();
-            System.out.println( "Mouse right button release: (" + currX2 + "," + currY2 + ")" );                                 
-            shapeToMove.move(currX, currY);
+            System.out.println( "Mouse right button release: (" + currX2 + "," + currY2 + ")" );   
             
-            shapeList.add(shapeToMove);           
-            shapeList.remove(indexShortest);
+            Shape shapeToMove = shapeList.get(indexShortest);    //move shape by getting its information,                 
+            shapeToMove.move(currX2, currY2);                    //creating a copy at new location,           
+            shapeList.add(shapeToMove);                          //adding altered shape to list       
+            shapeList.remove(indexShortest);                     //and removing the old shape
+            
             System.out.println("Removed " + indexShortest);
-
-            rightButtonPress = false;
-            
+            rightButtonPress = false;          
             repaint();
         }
     }
@@ -372,14 +371,14 @@ public class DrawingPane extends JPanel implements  ActionListener, MouseWheelLi
               
         for (Shape s : shapeList) 
         {
-            System.out.println("shape: " + s.toString() );
+            System.out.println(s.toString());
             //use pythagorean theorem to determine distance
             //between clicked x, y and the x, y of shape s
             
             System.out.println("X: " + s.centerx);
             System.out.println("Y: " + s.centery);
-            xDiff = (currX- s.centerx)* (currX - s.centerx);
-            yDiff = (currY - s.centery)*(currY - s.centery);           
+            xDiff = (currX2- s.centerx)*(currX2 - s.centerx);
+            yDiff = (currY2 - s.centery)*(currY2 - s.centery);           
             distance = Math.sqrt(xDiff + yDiff);
             
             System.out.println("DISTANCE: " + distance);
